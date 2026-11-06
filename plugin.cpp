@@ -10,8 +10,10 @@ static bool findHairShaders(RE::NiAVObject* av, T&& fn)
 	bool res = false;
 
 	RE::NiProperty* prop{};
-	if (auto shape = av->AsTriShape())
-		prop = shape->GetGeometryRuntimeData().properties[RE::BSGeometry::States::kEffect].get();
+	if (auto shape = av->AsTriShape()) {
+		// CommonLibSSE-NG 11 renamed properties[States::kEffect] (index 1, +0x08) to shaderProperty.
+		prop = shape->GetGeometryRuntimeData().shaderProperty.get();
+	}
 	else if (auto shape = av->AsNiTriShape())
 		prop = shape->GetRuntimeData().spEffectState.get();
 	else if (RE::NiNode* node = av->AsNode()) {

@@ -10,6 +10,8 @@ extern "C" __declspec(dllexport) constinit SKSE::PluginVersionData SKSEPlugin_Ve
     v.AuthorEmail(EMAIL);
     v.UsesAddressLibrary();
     v.UsesNoStructs();
+    // Format 5 (1.7.99+). NG 11 default-initializes this bit; keep it explicit for SKSE 2.3.1.
+    v.versionIndependenceEx |= SKSE::PluginVersionData::kVersionIndependentEx_AddressLibraryV5;
     return v;
     }();
 //SE
